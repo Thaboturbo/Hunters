@@ -12,8 +12,9 @@ public class PlayerScript : MonoBehaviour
     public float movementSpeed;
 
     public float gravity = 9.8f;
-    public float jumpSpeed = 20f;
+    public float jumpSpeed = 5f;
     public float verticalSpeed = 0;
+    public Cinemachine.CinemachineVirtualCamera playerCamera ;
     public void IAMovement(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
@@ -21,15 +22,19 @@ public class PlayerScript : MonoBehaviour
     }
 
     public void IAJump(InputAction.CallbackContext context)
-    { 
-     if (context.started == true)
+    {
+        if (context.started == true && GroundCheck() == true)
         {
             verticalSpeed = jumpSpeed;
         }
 
     }
+    public void IAInteract(InputAction.CallbackContext context)
+    {
 
-  
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,18 +45,18 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
-        if (GroundCheck() ==true)
+        if (GroundCheck() == true && verticalSpeed <= 0)
         {
             verticalSpeed = 0;
 
-           
+
         }
         else
         {
-            verticalSpeed = (verticalSpeed - gravity) * Time.deltaTime;
+            verticalSpeed = verticalSpeed - gravity * Time.deltaTime;
         }
 
-        transform.Translate(movementInput.x * movementSpeed * Time.deltaTime, verticalSpeed, movementInput.y * movementSpeed * Time.deltaTime);
+        transform.Translate(movementInput.x * movementSpeed * Time.deltaTime, verticalSpeed * Time.deltaTime, movementInput.y * movementSpeed * Time.deltaTime);
 
 
     }
@@ -59,6 +64,16 @@ public class PlayerScript : MonoBehaviour
     public bool GroundCheck()
     {
 
-        return Physics.Raycast(transform.position, transform.up * -1, 1);
+        return Physics.Raycast(transform.position, transform.up * -1, 1.1f);
+    }
+    public void InteractionRayCast()
+     {
+     Vector3 myPosition = transform.position;
+        Vector3 CameraDirection= playerCamera.transform.forward;
+
+
+        Ray InteractionRay = new Ray(transform.position, CameraDirection);
+        RaycastHit targetInfo;
+        Physics.Raycast(InteractionRay, out targetInfo, 5f);
     }
 }
