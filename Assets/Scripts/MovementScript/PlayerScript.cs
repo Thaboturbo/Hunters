@@ -15,6 +15,8 @@ public class PlayerScript : MonoBehaviour
     public float jumpSpeed = 5f;
     public float verticalSpeed = 0;
     public Cinemachine.CinemachineVirtualCamera playerCamera ;
+
+    public float rayLength = 10f;
     public void IAMovement(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
@@ -31,7 +33,10 @@ public class PlayerScript : MonoBehaviour
     }
     public void IAInteract(InputAction.CallbackContext context)
     {
-
+        if( context.started == true) 
+        {
+            InteractionRayCast();
+        }
 
     }
 
@@ -72,8 +77,29 @@ public class PlayerScript : MonoBehaviour
         Vector3 CameraDirection= playerCamera.transform.forward;
 
 
-        Ray InteractionRay = new Ray(transform.position, CameraDirection);
+        Ray InteractionRay = new Ray(playerCamera.transform.position, CameraDirection);
+        
         RaycastHit targetInfo;
-        Physics.Raycast(InteractionRay, out targetInfo, 5f);
+
+        if (Physics.Raycast(InteractionRay, out targetInfo, rayLength)== true)
+        {
+
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + (CameraDirection * rayLength), Color.green, 3f);
+
+            if (targetInfo.transform.gameObject.GetComponent<InteractionComponent>()== true )
+            {
+                targetInfo.transform.gameObject.GetComponent<InteractionComponent>().InteractionExecuted();
+
+            }
+            else
+            {
+                Debug.Log("Hit object does not have interaction component");
+            }
+        }
+        else 
+        {
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + (CameraDirection * rayLength), Color.red, 3f);
+        }
+        
     }
 }
