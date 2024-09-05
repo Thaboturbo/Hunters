@@ -74,7 +74,7 @@ public class PlayerScript : MonoBehaviour
     public void InteractionRayCast()
      {
      Vector3 myPosition = transform.position;
-        Vector3 CameraDirection= playerCamera.transform.forward;
+        Vector3 CameraDirection= Camera.main.transform.forward;
 
 
         Ray InteractionRay = new Ray(playerCamera.transform.position, CameraDirection);

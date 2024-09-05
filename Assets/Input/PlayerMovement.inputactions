@@ -31,20 +31,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MouseLook",
+                    "type": "Value",
+                    "id": "aed8f3d7-01ba-472c-8da0-f9d70bd1a4f4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "7ea54cfe-cbb2-4e9b-b976-21fc315eaf33",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "3f1e9fa1-ebb6-4516-9e24-021597105d2a",
@@ -119,6 +117,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a18bf4ae-29f9-4264-8c4f-db79eb2cc177",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseLook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
